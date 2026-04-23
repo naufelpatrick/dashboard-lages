@@ -136,6 +136,88 @@ function DataTable({
   );
 }
 
+function SkeletonCard() {
+  return (
+    <div className="card kpi-card skeleton-card">
+      <div className="skeleton skeleton-line short" />
+      <div className="skeleton skeleton-line large" />
+      <div className="skeleton skeleton-line medium" />
+    </div>
+  );
+}
+
+function SkeletonChartCard() {
+  return (
+    <div className="card chart-card">
+      <div className="skeleton skeleton-line medium" />
+      <div className="skeleton skeleton-line long" />
+      <div className="skeleton skeleton-chart" />
+    </div>
+  );
+}
+
+function SkeletonTableCard() {
+  return (
+    <div className="card table-card">
+      <div className="skeleton skeleton-line medium" />
+      <div className="skeleton skeleton-line long" />
+      <div className="skeleton skeleton-row" />
+      <div className="skeleton skeleton-row" />
+      <div className="skeleton skeleton-row" />
+      <div className="skeleton skeleton-row" />
+    </div>
+  );
+}
+
+function DashboardSkeleton() {
+  return (
+    <div className="app-shell">
+      <div className="container">
+        <header className="hero hero-loading">
+          <div>
+            <div className="skeleton skeleton-badge" />
+            <div className="skeleton skeleton-title" />
+            <div className="skeleton skeleton-title short-title" />
+            <div className="skeleton skeleton-text" />
+            <div className="skeleton skeleton-text medium-text" />
+          </div>
+
+          <div className="hero-side">
+            <div className="hero-mini-card">
+              <div className="skeleton skeleton-line medium" />
+              <div className="skeleton skeleton-line short" />
+            </div>
+            <div className="hero-mini-card">
+              <div className="skeleton skeleton-line medium" />
+              <div className="skeleton skeleton-line short" />
+            </div>
+            <div className="skeleton skeleton-button" />
+          </div>
+        </header>
+
+        <section className="kpi-grid">
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+        </section>
+
+        <section className="grid-two">
+          <SkeletonChartCard />
+          <SkeletonChartCard />
+        </section>
+
+        <section className="grid-two">
+          <SkeletonTableCard />
+          <SkeletonTableCard />
+        </section>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [data, setData] = useState<DashboardData>(defaultData);
   const [loading, setLoading] = useState(true);
@@ -219,13 +301,7 @@ export default function App() {
   const escalaChartData = data.escalaData.filter((item) => item.total > 0);
 
   if (loading) {
-    return (
-      <div className="app-shell">
-        <div className="container">
-          <div className="card loading-card">Carregando dashboard...</div>
-        </div>
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   if (error) {
@@ -242,7 +318,7 @@ export default function App() {
     <div className="app-shell">
       <div className="container">
         <header className="hero">
-          <div>
+          <div className="hero-main">
             <span className="badge">Observatório Digital de Lages</span>
             <h1>Maturidade Digital e Inovatividade Organizacional</h1>
             <p>
@@ -456,6 +532,10 @@ export default function App() {
             </ul>
           </div>
         </section>
+
+        <footer className="footer-note">
+          Desenvolvido por Patrick Naufel • Pesquisa de Mestrado • PPGSP • UNIPLAC 
+        </footer>
       </div>
     </div>
   );
