@@ -364,19 +364,19 @@ export default function App() {
             icon={Users}
           />
           <KpiCard
-            title="Maturidade Regional"
+            title="Maturidade Digital"
             value={formatMetric(data.maturidadeRegional)}
             subtitle="Índice médio regional"
             icon={Gauge}
           />
           <KpiCard
-            title="Escala Regional"
+            title="Nível de Maturidade Digital"
             value={data.escalaRegional}
             subtitle="Classificação atual"
             icon={BarChart3}
           />
           <KpiCard
-            title="Inovatividade"
+            title="Índice de Inovatividade"
             value={formatMetric(data.inovatividadeRegional)}
             subtitle="Índice médio regional"
             icon={TrendingUp}
@@ -398,7 +398,7 @@ export default function App() {
             />
             <div className="highlight-content">
               <div>
-                <p className="highlight-label">Escala atual</p>
+                <p className="highlight-label">Nível de Maturidade atual</p>
                 <h3 className="highlight-number">{data.escalaRegional}</h3>
                 <p className="highlight-text">
                   Maturidade regional:{" "}
