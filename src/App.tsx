@@ -10,7 +10,6 @@ import {
   RefreshCw,
   TrendingUp,
   Users,
-  BookOpen,
   GraduationCap,
   FileText,
   LayoutDashboard,
