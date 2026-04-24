@@ -1,5 +1,6 @@
 :root {
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
   color: #0f172a;
   background: #f6f8fc;
 }
@@ -23,8 +24,11 @@ body,
 }
 
 body {
-  background:
-    radial-gradient(circle at top left, rgba(99, 102, 241, 0.08), transparent 34%),
+  background: radial-gradient(
+      circle at top left,
+      rgba(99, 102, 241, 0.08),
+      transparent 34%
+    ),
     linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
   color: #0f172a;
   overflow-x: hidden;
@@ -53,8 +57,11 @@ body {
 /* HERO */
 
 .hero {
-  background:
-    radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.35), transparent 28%),
+  background: radial-gradient(
+      circle at 10% 10%,
+      rgba(99, 102, 241, 0.35),
+      transparent 28%
+    ),
     linear-gradient(135deg, #020617 0%, #0f172a 45%, #172554 100%);
   color: white;
   border-radius: 32px;
@@ -158,7 +165,7 @@ body {
   animation: spin 1s linear infinite;
 }
 
-/* CARDS BASE */
+/* BASE CARDS */
 
 .card {
   min-width: 0;
@@ -170,7 +177,7 @@ body {
   backdrop-filter: blur(5px);
 }
 
-/* KPI GRID */
+/* KPI */
 
 .kpi-grid {
   display: grid;
@@ -265,6 +272,79 @@ body {
   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
 }
 
+/* MATURITY SCALE */
+
+.maturity-scale-card {
+  padding: 26px;
+}
+
+.maturity-scale-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+  color: #475569;
+}
+
+.maturity-scale-header span {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.maturity-scale-header strong {
+  display: block;
+  font-size: 2rem;
+  color: #0f172a;
+  letter-spacing: -0.04em;
+}
+
+.maturity-current-level {
+  text-align: right;
+}
+
+.maturity-scale-track {
+  position: relative;
+  height: 18px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: visible;
+}
+
+.maturity-scale-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3b82f6, #7c3aed);
+  transition: width 0.5s ease;
+}
+
+.maturity-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.maturity-marker span {
+  display: block;
+  width: 14px;
+  height: 14px;
+  background: white;
+  border: 3px solid #0f172a;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
+}
+
+.maturity-scale-labels {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 0.82rem;
+  color: #64748b;
+  text-align: center;
+}
+
 /* SECTIONS */
 
 .grid-two {
@@ -318,8 +398,11 @@ body {
 }
 
 .highlight-card.purple {
-  background:
-    radial-gradient(circle at 85% 10%, rgba(255, 255, 255, 0.18), transparent 24%),
+  background: radial-gradient(
+      circle at 85% 10%,
+      rgba(255, 255, 255, 0.18),
+      transparent 24%
+    ),
     linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
   color: white;
   border: none;
@@ -524,9 +607,53 @@ tbody tr:hover {
 
 .footer-note {
   text-align: center;
-  color: #64748b;
+  color: #475569;
   font-size: 0.9rem;
-  padding: 8px 0 18px;
+  padding: 18px 0 8px;
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+}
+
+.footer-note p {
+  margin: 0;
+  max-width: 1000px;
+  line-height: 1.6;
+}
+
+.footer-note a {
+  color: #4f46e5;
+  font-weight: 700;
+}
+
+.footer-logo {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+}
+
+/* REFERENCES */
+
+.references-section {
+  color: #475569;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  padding: 8px 0 24px;
+}
+
+.references-section h2 {
+  text-align: center;
+  font-size: 1rem;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.references-section ul {
+  max-width: 980px;
+  margin: 0 auto;
+  padding-left: 20px;
+  display: grid;
+  gap: 8px;
 }
 
 /* LOADING / SKELETON */
@@ -742,5 +869,26 @@ tbody tr:hover {
     left: auto;
     right: 0;
     width: 230px;
+  }
+
+  .maturity-scale-header {
+    display: grid;
+    gap: 12px;
+  }
+
+  .maturity-current-level {
+    text-align: left;
+  }
+
+  .maturity-scale-labels {
+    font-size: 0.68rem;
+  }
+
+  .maturity-scale-header strong {
+    font-size: 1.7rem;
+  }
+
+  .footer-logo {
+    max-width: 240px;
   }
 }

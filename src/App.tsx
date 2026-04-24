@@ -22,8 +22,9 @@ import {
   Legend,
   Cell,
 } from "recharts";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ElementType } from "react";
 import { loadResumo, type DashboardData, type SizeRow } from "./lib/loadResumo";
+import logoPPGSP from "./assets/logo_ppgsp_home300.png";
 import "./App.css";
 
 const defaultData: DashboardData = {
@@ -98,7 +99,7 @@ function KpiCard({
   title: string;
   value: string;
   subtitle: string;
-  icon: React.ElementType;
+  icon: ElementType;
   help: string;
 }) {
   return (
@@ -111,6 +112,7 @@ function KpiCard({
           <h3 className="kpi-value">{value}</h3>
           <p className="kpi-subtitle">{subtitle}</p>
         </div>
+
         <div className="icon-wrap">
           <Icon size={20} />
         </div>
@@ -124,7 +126,7 @@ function SectionTitle({
   title,
   description,
 }: {
-  icon: React.ElementType;
+  icon: ElementType;
   title: string;
   description: string;
 }) {
@@ -133,6 +135,7 @@ function SectionTitle({
       <div className="section-icon">
         <Icon size={18} />
       </div>
+
       <div>
         <h2>{title}</h2>
         <p>{description}</p>
@@ -145,6 +148,7 @@ function DataTable({ title, rows }: { title: string; rows: SizeRow[] }) {
   return (
     <div className="card table-card">
       <h3 className="table-title">{title}</h3>
+
       <div className="table-wrap">
         <table>
           <thead>
@@ -155,6 +159,7 @@ function DataTable({ title, rows }: { title: string; rows: SizeRow[] }) {
               <th>Inovatividade</th>
             </tr>
           </thead>
+
           <tbody>
             {rows.map((row) => (
               <tr key={row.porte}>
@@ -176,7 +181,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 
   return (
     <div className="faq-item">
-      <button className="faq-button" onClick={() => setOpen(!open)}>
+      <button className="faq-button" onClick={() => setOpen(!open)} type="button">
         <span>{question}</span>
         <ChevronDown size={18} className={open ? "faq-icon rotate" : "faq-icon"} />
       </button>
@@ -268,6 +273,61 @@ function DashboardSkeleton() {
   );
 }
 
+function MaturityScaleCard({ value, level }: { value: number; level: string }) {
+  const max = 80;
+  const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
+
+  const levels = [
+    { label: "Não iniciado", position: 0 },
+    { label: "Iniciante", position: 25 },
+    { label: "Consciente", position: 50 },
+    { label: "Gerenciado", position: 75 },
+    { label: "Integrado", position: 100 },
+  ];
+
+  return (
+    <section className="card maturity-scale-card">
+      <SectionTitle
+        icon={Gauge}
+        title="Nível de Maturidade Digital"
+        description="Escala regional calculada a partir do índice médio das organizações de Lages."
+      />
+
+      <div className="maturity-scale-header">
+        <div>
+          <span>Índice atual</span>
+          <strong>{formatMetric(value)}</strong>
+        </div>
+
+        <div className="maturity-current-level">
+          <span>Nível atual</span>
+          <strong>{level}</strong>
+        </div>
+      </div>
+
+      <div className="maturity-scale-track">
+        <div className="maturity-scale-fill" style={{ width: `${percentage}%` }} />
+
+        {levels.map((item) => (
+          <div
+            key={item.label}
+            className="maturity-marker"
+            style={{ left: `${item.position}%` }}
+          >
+            <span />
+          </div>
+        ))}
+      </div>
+
+      <div className="maturity-scale-labels">
+        {levels.map((item) => (
+          <span key={item.label}>{item.label}</span>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export default function App() {
   const [data, setData] = useState<DashboardData>(defaultData);
   const [loading, setLoading] = useState(true);
@@ -320,6 +380,7 @@ export default function App() {
 
   async function handleRefresh() {
     setRefreshing(true);
+
     try {
       const result = await loadResumo();
       setData(result);
@@ -338,13 +399,11 @@ export default function App() {
     }
   }
 
-  const setorChartData = data.porSetor
-    .filter(hasData)
-    .map((item) => ({
-      setor: item.setor,
-      maturidade: metricOrZero(item.maturidade),
-      inovatividade: metricOrZero(item.inovatividade),
-    }));
+  const setorChartData = data.porSetor.filter(hasData).map((item) => ({
+    setor: item.setor,
+    maturidade: metricOrZero(item.maturidade),
+    inovatividade: metricOrZero(item.inovatividade),
+  }));
 
   const escalaChartData = data.escalaData.filter((item) => item.total > 0);
 
@@ -365,7 +424,7 @@ export default function App() {
       <div className="container">
         <header className="hero">
           <div className="hero-main">
-            <span className="badge">Observatório Digital de Lages</span>
+            <span className="badge">Projeto de Mestrado</span>
             <h1>Maturidade Digital e Inovatividade Organizacional</h1>
             <p>
               Dashboard regional conectado à planilha da pesquisa, com foco em
@@ -437,6 +496,11 @@ export default function App() {
           />
         </section>
 
+        <MaturityScaleCard
+          value={data.maturidadeRegional}
+          level={data.escalaRegional}
+        />
+
         <section className="grid-two">
           <div className="card highlight-card">
             <SectionTitle
@@ -444,6 +508,7 @@ export default function App() {
               title="Leitura regional"
               description="Síntese executiva do estágio atual das organizações de Lages."
             />
+
             <div className="highlight-content">
               <div>
                 <p className="highlight-label">Escala atual</p>
@@ -464,6 +529,7 @@ export default function App() {
               title="Correlação observada"
               description="Associação entre maturidade digital e inovatividade."
             />
+
             <div className="highlight-content">
               <div>
                 <p className="highlight-label">Coeficiente de Pearson</p>
@@ -486,6 +552,7 @@ export default function App() {
               title="Comparativo por setor"
               description="O gráfico exibe apenas setores com respostas válidas."
             />
+
             <div className="chart-wrap">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={setorChartData}>
@@ -515,6 +582,7 @@ export default function App() {
               title="Distribuição da escala"
               description="Faixas de maturidade com ocorrência na amostra."
             />
+
             <div className="chart-wrap">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={escalaChartData}>
@@ -551,6 +619,7 @@ export default function App() {
               title="Leitura metodológica"
               description="Resumo interpretativo da base atual."
             />
+
             <ul className="insight-list">
               <li>
                 O índice regional de maturidade digital aponta nível{" "}
@@ -573,6 +642,7 @@ export default function App() {
               title="Painel conectado"
               description="Os dados são lidos automaticamente da planilha."
             />
+
             <ul className="insight-list">
               <li>Novas respostas atualizam os indicadores.</li>
               <li>Setor e porte acompanham a base real.</li>
@@ -596,7 +666,7 @@ export default function App() {
 
             <FaqItem
               question="O que é Nível de Maturidade Digital?"
-              answer="É a classificação do estágio atual da organização com base no índice calculado. O painel utiliza níveis como Iniciante, Consciente, Gerenciado, Integrado e Otimizado."
+              answer="É a classificação do estágio atual da organização com base no índice calculado. O painel utiliza níveis como Não iniciado, Iniciante, Consciente, Gerenciado e Integrado."
             />
 
             <FaqItem
@@ -617,8 +687,62 @@ export default function App() {
         </section>
 
         <footer className="footer-note">
-          Desenvolvido por Patrick Naufel • Pesquisa de Mestrado • PPGSP
+          <p>
+            Projeto de Mestrado / PPGSP - UNIPLAC / Mestrando: Patrick A. G.
+            Naufel /
+            <a
+              href="http://lattes.cnpq.br/0026328778886854"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {" "}Link para Lattes
+            </a>{" "}
+            / Orientadora: Profa. Dra. Cristina Keiko Yamaguchi / Coorientador:
+            Prof. Dr. Rogério Antônio Casagrande
+          </p>
+
+          <img
+            src={logoPPGSP}
+            alt="Logo PPGSP UNIPLAC"
+            className="footer-logo"
+          />
         </footer>
+
+        <section className="references-section">
+          <h2>Principais referências</h2>
+
+          <ul>
+            <li>
+              Berman, S. J. (2012). Digital transformation: Opportunities to
+              create new business models. <em>Strategy & Leadership, 40</em>(2),
+              16–24.
+            </li>
+            <li>
+              OECD/Eurostat. (2018). <em>Oslo Manual 2018: Guidelines for
+              collecting, reporting and using data on innovation</em> (4th ed.).
+              OECD Publishing.
+            </li>
+            <li>
+              Rogers, D. L. (2016). <em>The digital transformation playbook:
+              Rethink your business for the digital age</em>. Columbia Business
+              School Publishing.
+            </li>
+            <li>
+              Teece, D. J. (2010). Business models, business strategy and
+              innovation. <em>Long Range Planning, 43</em>(2–3), 172–194.
+            </li>
+            <li>
+              Valdez-de-Leon, O. (2016). A digital maturity model for
+              telecommunications service providers.{" "}
+              <em>Technology Innovation Management Review, 6</em>(8), 19–32.
+            </li>
+            <li>
+              Westerman, G., Bonnet, D., & McAfee, A. (2014).{" "}
+              <em>Leading digital: Turning technology into business transformation</em>.
+              Harvard Business Review Press.
+            </li>
+          </ul>
+        </section>
       </div>
     </div>
   );
