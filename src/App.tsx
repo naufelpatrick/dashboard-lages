@@ -642,39 +642,64 @@ export default function App() {
         </section>
 
         <section className="card faq-card">
-          <SectionTitle
-            icon={HelpCircle}
-            title="Entenda os indicadores"
-            description="Guia rápido para leitura do painel."
-          />
+  <SectionTitle
+    icon={HelpCircle}
+    title="Perguntas Frequentes (FAQ)"
+    description="Conceitos centrais e orientações para interpretação acadêmica do painel."
+  />
 
-          <div className="faq-list">
-            <FaqItem
-              question="O que é Maturidade Digital?"
-              answer="É o nível de preparo da organização para gerar valor por meio de gestão, tecnologia, processos, dados e cultura digital."
-            />
+  <div className="faq-list">
+    <FaqItem
+      question="O que é Maturidade Digital?"
+      answer="Maturidade Digital representa o grau de preparo de uma organização para utilizar tecnologias, processos, dados, liderança e cultura organizacional de forma estratégica. Não se restringe à adoção de ferramentas digitais, mas envolve a capacidade institucional de gerar valor, eficiência, competitividade e adaptação contínua em ambientes de mudança."
+    />
 
-            <FaqItem
-              question="O que é Nível de Maturidade Digital?"
-              answer="É a classificação do estágio atual da organização com base no índice calculado. O painel utiliza níveis como Não iniciado, Iniciante, Consciente, Gerenciado e Integrado."
-            />
+    <FaqItem
+      question="Como interpretar o Índice de Maturidade Digital?"
+      answer="O índice apresentado no painel corresponde à média consolidada das organizações respondentes do recorte analisado. Quanto maior o resultado, maior tende a ser o nível de estruturação digital. Esse indicador sintetiza diferentes dimensões organizacionais avaliadas no instrumento de pesquisa, como gestão, processos, relacionamento com clientes, uso de tecnologia e capacidade de inovação."
+    />
 
-            <FaqItem
-              question="O que é Índice de Inovatividade?"
-              answer="É uma medida da capacidade organizacional de criar melhorias, novos produtos, serviços, processos ou práticas de gestão."
-            />
+    <FaqItem
+      question="O que significa a Escala de Maturidade?"
+      answer="A Escala de Maturidade classifica o estágio organizacional em níveis progressivos, como Não Iniciado, Iniciante, Consciente, Gerenciado e Integrado. Essa tipologia permite interpretar resultados numéricos de forma mais aplicada, identificando em qual estágio médio as organizações da amostra se encontram e quais avanços ainda são necessários."
+    />
 
-            <FaqItem
-              question="Como a correlação foi calculada?"
-              answer="A correlação foi calculada pelo coeficiente de Pearson, considerando os scores individuais de maturidade digital e inovatividade das organizações respondentes."
-            />
+    <FaqItem
+      question="O que é Inovatividade Organizacional?"
+      answer="Inovatividade Organizacional é a capacidade de uma empresa desenvolver, adotar e implementar melhorias relevantes em produtos, serviços, processos internos, modelos de negócio ou práticas gerenciais. Trata-se de uma competência estratégica associada à competitividade, diferenciação e sustentabilidade no longo prazo."
+    />
 
-            <FaqItem
-              question="De onde vêm os dados?"
-              answer="Os indicadores são atualizados automaticamente a partir da base de respostas da pesquisa aplicada às organizações participantes."
-            />
-          </div>
-        </section>
+    <FaqItem
+      question="Como interpretar o Índice de Inovatividade?"
+      answer="O índice de inovatividade expressa a tendência média das organizações respondentes em relação a comportamentos e práticas inovadoras. Valores mais elevados indicam maior predisposição à experimentação, melhoria contínua, renovação estratégica e geração de soluções novas ou aprimoradas."
+    />
+
+    <FaqItem
+      question="Como a correlação foi calculada?"
+      answer="A relação entre maturidade digital e inovatividade foi estimada por meio do Coeficiente de Correlação de Pearson, técnica estatística amplamente utilizada para medir associação linear entre variáveis quantitativas. O resultado varia entre -1 e +1, sendo valores positivos mais altos indicativos de associação direta mais intensa."
+    />
+
+    <FaqItem
+      question="Correlação significa causa e efeito?"
+      answer="Não necessariamente. Correlação indica associação estatística entre variáveis, mas não comprova causalidade isoladamente. Em termos práticos, o resultado sugere que organizações mais maduras digitalmente tendem também a apresentar maior inovatividade, porém outros fatores contextuais podem influenciar essa relação."
+    />
+
+    <FaqItem
+      question="Como os dados são atualizados?"
+      answer="O painel está conectado à base consolidada da pesquisa. Novas respostas válidas podem alterar automaticamente médias, distribuições e indicadores estatísticos, permitindo acompanhamento dinâmico da evolução regional durante o período de coleta."
+    />
+
+    <FaqItem
+      question="Os dados identificam empresas específicas?"
+      answer="Não. O painel apresenta resultados agregados e consolidados, preservando anonimato e confidencialidade dos participantes. O objetivo é análise acadêmica e diagnóstico regional, sem exposição individual de organizações respondentes."
+    />
+
+    <FaqItem
+      question="Qual a utilidade prática deste estudo?"
+      answer="Os resultados podem apoiar empresas, entidades setoriais, universidades e formuladores de políticas públicas na compreensão do estágio regional de transformação digital e inovação. Isso contribui para decisões estratégicas, programas de capacitação, investimentos e ações de desenvolvimento econômico."
+    />
+  </div>
+</section>
 
         <footer className="footer-note">
           <p>
