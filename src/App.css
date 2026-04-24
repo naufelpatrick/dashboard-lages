@@ -63,7 +63,7 @@ body {
   grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.75fr);
   gap: 32px;
   box-shadow: 0 28px 70px rgba(15, 23, 42, 0.2);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .hero-main,
@@ -183,6 +183,8 @@ body {
   min-height: 124px;
   display: flex;
   padding: 18px;
+  position: relative;
+  overflow: visible;
 }
 
 .kpi-header {
@@ -223,6 +225,44 @@ body {
   place-items: center;
   color: #334155;
   flex-shrink: 0;
+}
+
+/* TOOLTIPS */
+
+.tooltip-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.tooltip-trigger {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  color: #94a3b8;
+}
+
+.tooltip-trigger:hover {
+  color: #4f46e5;
+}
+
+.tooltip-box {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  width: 240px;
+  background: #0f172a;
+  color: white;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  padding: 11px 13px;
+  border-radius: 14px;
+  z-index: 80;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
 }
 
 /* SECTIONS */
@@ -424,6 +464,60 @@ tbody tr:hover {
   position: absolute;
   left: 0;
   top: 10px;
+}
+
+/* FAQ */
+
+.faq-card {
+  padding: 24px;
+}
+
+.faq-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.faq-item {
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  overflow: hidden;
+  background: white;
+}
+
+.faq-button {
+  width: 100%;
+  border: none;
+  background: white;
+  padding: 16px 18px;
+  text-align: left;
+  font-weight: 700;
+  color: #0f172a;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+}
+
+.faq-button:hover {
+  background: #f8fafc;
+}
+
+.faq-answer {
+  padding: 0 18px 18px;
+  color: #475569;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.faq-icon {
+  transition: 0.2s ease;
+  flex-shrink: 0;
+}
+
+.faq-icon.rotate {
+  transform: rotate(180deg);
 }
 
 /* FOOTER */
@@ -642,5 +736,11 @@ tbody tr:hover {
 
   .card {
     border-radius: 22px;
+  }
+
+  .tooltip-box {
+    left: auto;
+    right: 0;
+    width: 230px;
   }
 }

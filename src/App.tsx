@@ -2,8 +2,10 @@ import {
   Activity,
   BarChart3,
   Building2,
+  ChevronDown,
   Factory,
   Gauge,
+  HelpCircle,
   MapPin,
   RefreshCw,
   TrendingUp,
@@ -38,6 +40,20 @@ const defaultData: DashboardData = {
   escalaData: [],
 };
 
+const helpTexts = {
+  cidade: "Recorte geográfico considerado na análise atual do painel.",
+  respostas:
+    "Quantidade de respostas válidas consideradas no cálculo dos indicadores.",
+  maturidade:
+    "Índice médio que representa o preparo digital das organizações analisadas.",
+  nivel:
+    "Classificação do estágio de maturidade digital com base no índice calculado.",
+  inovatividade:
+    "Índice que expressa a capacidade das organizações de inovar em produtos, serviços, processos ou gestão.",
+  correlacao:
+    "Coeficiente de Pearson usado para medir a relação estatística entre maturidade digital e inovatividade.",
+};
+
 function formatMetric(value: number | null) {
   if (value === null || Number.isNaN(value)) return "-";
   return value.toFixed(2).replace(".", ",");
@@ -51,22 +67,47 @@ function hasData<T extends { respostas: number }>(row: T) {
   return row.respostas > 0;
 }
 
+function TooltipLabel({ title, help }: { title: string; help: string }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="tooltip-label">
+      <span>{title}</span>
+
+      <button
+        className="tooltip-trigger"
+        onClick={() => setOpen(!open)}
+        type="button"
+        aria-label={`Ajuda sobre ${title}`}
+      >
+        <HelpCircle size={14} />
+      </button>
+
+      {open && <div className="tooltip-box">{help}</div>}
+    </div>
+  );
+}
+
 function KpiCard({
   title,
   value,
   subtitle,
   icon: Icon,
+  help,
 }: {
   title: string;
   value: string;
   subtitle: string;
   icon: React.ElementType;
+  help: string;
 }) {
   return (
     <div className="card kpi-card">
       <div className="kpi-header">
         <div>
-          <p className="kpi-title">{title}</p>
+          <div className="kpi-title">
+            <TooltipLabel title={title} help={help} />
+          </div>
           <h3 className="kpi-value">{value}</h3>
           <p className="kpi-subtitle">{subtitle}</p>
         </div>
@@ -100,13 +141,7 @@ function SectionTitle({
   );
 }
 
-function DataTable({
-  title,
-  rows,
-}: {
-  title: string;
-  rows: SizeRow[];
-}) {
+function DataTable({ title, rows }: { title: string; rows: SizeRow[] }) {
   return (
     <div className="card table-card">
       <h3 className="table-title">{title}</h3>
@@ -132,6 +167,21 @@ function DataTable({
           </tbody>
         </table>
       </div>
+    </div>
+  );
+}
+
+function FaqItem({ question, answer }: { question: string; answer: string }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="faq-item">
+      <button className="faq-button" onClick={() => setOpen(!open)}>
+        <span>{question}</span>
+        <ChevronDown size={18} className={open ? "faq-icon rotate" : "faq-icon"} />
+      </button>
+
+      {open && <div className="faq-answer">{answer}</div>}
     </div>
   );
 }
@@ -247,9 +297,7 @@ export default function App() {
         );
       } catch (err) {
         console.error(err);
-        if (mounted) {
-          setError("Não foi possível carregar a planilha.");
-        }
+        if (mounted) setError("Não foi possível carregar a planilha.");
       } finally {
         if (mounted) {
           setLoading(false);
@@ -300,9 +348,7 @@ export default function App() {
 
   const escalaChartData = data.escalaData.filter((item) => item.total > 0);
 
-  if (loading) {
-    return <DashboardSkeleton />;
-  }
+  if (loading) return <DashboardSkeleton />;
 
   if (error) {
     return (
@@ -339,11 +385,7 @@ export default function App() {
               <strong>{lastUpdated || "Agora"}</strong>
             </div>
 
-            <button
-              className="refresh-btn"
-              onClick={handleRefresh}
-              disabled={refreshing}
-            >
+            <button className="refresh-btn" onClick={handleRefresh} disabled={refreshing}>
               <RefreshCw size={16} className={refreshing ? "spin-icon" : ""} />
               {refreshing ? "Atualizando..." : "Atualizar agora"}
             </button>
@@ -356,36 +398,42 @@ export default function App() {
             value={data.cidade}
             subtitle="Recorte do estudo"
             icon={MapPin}
+            help={helpTexts.cidade}
           />
           <KpiCard
             title="Respostas válidas"
             value={String(data.totalRespostas)}
             subtitle="Organizações de Lages"
             icon={Users}
+            help={helpTexts.respostas}
           />
           <KpiCard
             title="Maturidade Digital"
             value={formatMetric(data.maturidadeRegional)}
             subtitle="Índice médio regional"
             icon={Gauge}
+            help={helpTexts.maturidade}
           />
           <KpiCard
             title="Nível de Maturidade Digital"
             value={data.escalaRegional}
             subtitle="Classificação atual"
             icon={BarChart3}
+            help={helpTexts.nivel}
           />
           <KpiCard
             title="Índice de Inovatividade"
             value={formatMetric(data.inovatividadeRegional)}
             subtitle="Índice médio regional"
             icon={TrendingUp}
+            help={helpTexts.inovatividade}
           />
           <KpiCard
             title="Correlação"
             value={formatMetric(data.correlacao)}
             subtitle={data.interpretacaoCorrelacao}
             icon={Activity}
+            help={helpTexts.correlacao}
           />
         </section>
 
@@ -398,10 +446,10 @@ export default function App() {
             />
             <div className="highlight-content">
               <div>
-                <p className="highlight-label">Nível de Maturidade atual</p>
+                <p className="highlight-label">Escala atual</p>
                 <h3 className="highlight-number">{data.escalaRegional}</h3>
                 <p className="highlight-text">
-                  Maturidade regional:{" "}
+                  Maturidade digital:{" "}
                   <strong>{formatMetric(data.maturidadeRegional)}</strong> ·
                   Inovatividade:{" "}
                   <strong>{formatMetric(data.inovatividadeRegional)}</strong>
@@ -505,7 +553,7 @@ export default function App() {
             />
             <ul className="insight-list">
               <li>
-                O índice regional de maturidade aponta nível{" "}
+                O índice regional de maturidade digital aponta nível{" "}
                 <strong>{data.escalaRegional}</strong>.
               </li>
               <li>
@@ -513,7 +561,7 @@ export default function App() {
                 <strong>{formatMetric(data.inovatividadeRegional)}</strong>.
               </li>
               <li>
-                A relação entre maturidade e inovatividade é{" "}
+                A relação entre maturidade digital e inovatividade é{" "}
                 <strong>{data.interpretacaoCorrelacao}</strong>.
               </li>
             </ul>
@@ -533,8 +581,43 @@ export default function App() {
           </div>
         </section>
 
+        <section className="card faq-card">
+          <SectionTitle
+            icon={HelpCircle}
+            title="Entenda os indicadores"
+            description="Guia rápido para leitura do painel."
+          />
+
+          <div className="faq-list">
+            <FaqItem
+              question="O que é Maturidade Digital?"
+              answer="É o nível de preparo da organização para gerar valor por meio de gestão, tecnologia, processos, dados e cultura digital."
+            />
+
+            <FaqItem
+              question="O que é Nível de Maturidade Digital?"
+              answer="É a classificação do estágio atual da organização com base no índice calculado. O painel utiliza níveis como Iniciante, Consciente, Gerenciado, Integrado e Otimizado."
+            />
+
+            <FaqItem
+              question="O que é Índice de Inovatividade?"
+              answer="É uma medida da capacidade organizacional de criar melhorias, novos produtos, serviços, processos ou práticas de gestão."
+            />
+
+            <FaqItem
+              question="Como a correlação foi calculada?"
+              answer="A correlação foi calculada pelo coeficiente de Pearson, considerando os scores individuais de maturidade digital e inovatividade das organizações respondentes."
+            />
+
+            <FaqItem
+              question="De onde vêm os dados?"
+              answer="Os indicadores são atualizados automaticamente a partir da base de respostas da pesquisa aplicada às organizações participantes."
+            />
+          </div>
+        </section>
+
         <footer className="footer-note">
-          Desenvolvido por Patrick Naufel • Pesquisa de Mestrado • PPGSP • UNIPLAC 
+          Desenvolvido por Patrick Naufel • Pesquisa de Mestrado • PPGSP
         </footer>
       </div>
     </div>
