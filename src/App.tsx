@@ -47,8 +47,6 @@ const helpTexts = {
     "Quantidade de respostas válidas consideradas no cálculo dos indicadores.",
   maturidade:
     "Índice médio que representa o preparo digital das organizações analisadas.",
-  nivel:
-    "Classificação do estágio de maturidade digital com base no índice calculado.",
   inovatividade:
     "Índice que expressa a capacidade das organizações de inovar em produtos, serviços, processos ou gestão.",
   correlacao:
@@ -256,7 +254,6 @@ function DashboardSkeleton() {
           <SkeletonCard />
           <SkeletonCard />
           <SkeletonCard />
-          <SkeletonCard />
         </section>
 
         <section className="grid-two">
@@ -424,7 +421,7 @@ export default function App() {
       <div className="container">
         <header className="hero">
           <div className="hero-main">
-            <span className="badge">Projeto de Mestrado</span>
+            <span className="badge">Observatório Digital de Lages</span>
             <h1>Maturidade Digital e Inovatividade Organizacional</h1>
             <p>
               Dashboard regional conectado à planilha da pesquisa, com foco em
@@ -474,14 +471,7 @@ export default function App() {
             help={helpTexts.maturidade}
           />
           <KpiCard
-            title="Nível de Maturidade Digital"
-            value={data.escalaRegional}
-            subtitle="Classificação atual"
-            icon={BarChart3}
-            help={helpTexts.nivel}
-          />
-          <KpiCard
-            title="Índice de Inovatividade"
+            title="Escala Inovatividade"
             value={formatMetric(data.inovatividadeRegional)}
             subtitle="Índice médio regional"
             icon={TrendingUp}

@@ -181,7 +181,7 @@ body {
 
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 16px;
   align-items: stretch;
 }
@@ -306,7 +306,7 @@ body {
 
 .maturity-scale-track {
   position: relative;
-  height: 18px;
+  height: 20px;
   border-radius: 999px;
   background: #e2e8f0;
   overflow: visible;
@@ -315,7 +315,8 @@ body {
 .maturity-scale-fill {
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #3b82f6, #7c3aed);
+  background: linear-gradient(90deg, #ed3a64 0%, #6366f1 45%, #3b82f6 100%);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
   transition: width 0.5s ease;
 }
 
