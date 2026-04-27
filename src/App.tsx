@@ -4,15 +4,15 @@ import {
   Building2,
   ChevronDown,
   Factory,
+  FileText,
   Gauge,
+  GraduationCap,
   HelpCircle,
+  LayoutDashboard,
   MapPin,
   RefreshCw,
   TrendingUp,
   Users,
-  GraduationCap,
-  FileText,
-  LayoutDashboard,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -118,6 +118,7 @@ function KpiCard({
           <h3 className="kpi-value">{value}</h3>
           <p className="kpi-subtitle">{subtitle}</p>
         </div>
+
         <div className="icon-wrap">
           <Icon size={20} />
         </div>
@@ -140,6 +141,7 @@ function SectionTitle({
       <div className="section-icon">
         <Icon size={18} />
       </div>
+
       <div>
         <h2>{title}</h2>
         <p>{description}</p>
@@ -152,6 +154,7 @@ function DataTable({ title, rows }: { title: string; rows: SizeRow[] }) {
   return (
     <div className="card table-card">
       <h3 className="table-title">{title}</h3>
+
       <div className="table-wrap">
         <table>
           <thead>
@@ -162,6 +165,7 @@ function DataTable({ title, rows }: { title: string; rows: SizeRow[] }) {
               <th>Inovatividade</th>
             </tr>
           </thead>
+
           <tbody>
             {rows.map((row) => (
               <tr key={row.porte}>
@@ -183,10 +187,18 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
 
   return (
     <div className="faq-item">
-      <button className="faq-button" onClick={() => setOpen(!open)} type="button">
+      <button
+        className="faq-button"
+        onClick={() => setOpen(!open)}
+        type="button"
+      >
         <span>{question}</span>
-        <ChevronDown size={18} className={open ? "faq-icon rotate" : "faq-icon"} />
+        <ChevronDown
+          size={18}
+          className={open ? "faq-icon rotate" : "faq-icon"}
+        />
       </button>
+
       {open && <div className="faq-answer">{answer}</div>}
     </div>
   );
@@ -237,6 +249,7 @@ function DashboardSkeleton() {
             <div className="skeleton skeleton-text" />
             <div className="skeleton skeleton-text medium-text" />
           </div>
+
           <div className="hero-side">
             <div className="hero-mini-card">
               <div className="skeleton skeleton-line medium" />
@@ -305,7 +318,10 @@ function MaturityScaleCard({ value, level }: { value: number; level: string }) {
       </div>
 
       <div className="maturity-scale-track">
-        <div className="maturity-scale-fill" style={{ width: `${percentage}%` }} />
+        <div
+          className="maturity-scale-fill"
+          style={{ width: `${percentage}%` }}
+        />
 
         {levels.map((item) => (
           <div
@@ -343,9 +359,10 @@ function NavMenu({
   ];
 
   return (
-    <nav className="nav-card">
+    <nav className="nav-card" aria-label="Navegação principal">
       {items.map((item) => {
         const Icon = item.icon;
+
         return (
           <button
             key={item.id}
@@ -810,7 +827,11 @@ function ResearchersPage() {
       </section>
 
       <section className="researchers-card card">
-        <img src={logoPPGSP} alt="Logo PPGSP UNIPLAC" className="researchers-logo" />
+        <img
+          src={logoPPGSP}
+          alt="Logo PPGSP UNIPLAC"
+          className="researchers-logo"
+        />
 
         <div className="researchers-content">
           <h2>Projeto de Mestrado / PPGSP - UNIPLAC</h2>
