@@ -56,6 +56,7 @@ const SCALE_COLORS: Record<string, string> = {
   Consciente: "#eab308",
   Gerenciado: "#3b82f6",
   Integrado: "#8b5cf6",
+  Otimizado: "#22c55e",
 };
 
 function colToIndex(col: string): number {
@@ -138,11 +139,12 @@ function round2(n: number): number {
 }
 
 function deriveScale(score: number): string {
-  if (score <= 19) return "Não iniciado";
-  if (score <= 39) return "Iniciante";
-  if (score <= 59) return "Consciente";
-  if (score <= 79) return "Gerenciado";
-  return "Integrado";
+  if (score < 20) return "Não iniciado";
+  if (score <= 30) return "Iniciante";
+  if (score <= 45) return "Consciente";
+  if (score <= 60) return "Gerenciado";
+  if (score <= 70) return "Integrado";
+  return "Otimizado";
 }
 
 function deriveCorrelationLabel(r: number): string {
@@ -307,6 +309,7 @@ export async function loadResumo(): Promise<DashboardData> {
     Consciente: 0,
     Gerenciado: 0,
     Integrado: 0,
+    Otimizado: 0,
   };
 
   validRows.forEach((row) => {
