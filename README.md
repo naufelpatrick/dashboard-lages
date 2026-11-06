@@ -1,73 +1,39 @@
-# React + TypeScript + Vite
+# Observatório Digital de Lages
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Dashboard de maturidade digital e inovatividade organizacional, desenvolvido em React, TypeScript, Vite e Recharts. A fonte é a planilha já configurada em `src/lib/loadResumo.ts`, atualizada ao abrir o painel, manualmente e a cada cinco minutos.
 
-Currently, two official plugins are available:
+## Executar
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+npm ci
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Verificar
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+npm run build
+npm run lint
+node --test tests/analytics.test.mjs
 ```
+
+Os testes usam o suporte nativo a TypeScript do Node 22.18+ (ou Node 24+).
+
+## Indicadores
+
+- Rosca e tabela com os seis níveis operacionais de maturidade, frequências e percentuais.
+- Comparação das médias de maturidade e inovatividade por porte e setor, com tamanho de cada grupo.
+- Distribuição percentual dos níveis dentro de cada porte.
+- Dispersão dos pares de notas, sem identificação das organizações, agrupando pares repetidos.
+- Mediana, desvio padrão amostral e participação dos níveis iniciais e superiores do IMD.
+- Filtro por setor aplicado a todos os indicadores da página.
+
+## Regras de cálculo
+
+Ambos os índices somam vinte itens de 0 a 4 (escala 0–80). O IMD usa D:W; a inovatividade usa X:AP e AR, preservando o mapeamento existente do questionário e ignorando AQ. São consideradas as respostas de Lages dos dois setores previstos. Itens ausentes ou desconhecidos excluem a resposta dos cálculos e são contabilizados, sem transformar ausência em nota zero.
+
+As faixas operacionais seguem a Tabela 4 da dissertação: IMD <20, 20–30, 31–45, 46–60, 61–70 e >70. Classificação da média usa o valor completo, antes do arredondamento de apresentação. A correlação usa as notas contínuas. Correlações com menos de duas respostas ou variância nula aparecem como não calculáveis.
+
+O porte segue a Tabela 3, respeitando a categoria selecionada na coleta. Comércio/Serviços: micro até 9, pequena 10–49, média 50–99 e grande 100 ou mais. Indústria/Construção: micro até 19, pequena 20–99, média 100–499 e grande 500 ou mais. A categoria selecionada “até 1 colaborador” aparece como MEI conforme a tipologia da pesquisa; não se infere enquadramento legal apenas do número de empregados. Categorias desconhecidas permanecem como “Não classificado”, sem desaparecer do total.
+
+As médias agregadas são calculadas diretamente por organização, não pela média simples das médias dos portes. Grupos vazios exibem traço. A amostra é não probabilística por conveniência: os resultados descrevem participantes e não constituem inferência causal ou generalização para todas as empresas do município.

@@ -1,9 +1,7 @@
 import {
   Activity,
   BarChart3,
-  Building2,
   ChevronDown,
-  Factory,
   FileText,
   Gauge,
   GraduationCap,
@@ -14,21 +12,13 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
-import {
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Cell,
-} from "recharts";
-import { useEffect, useState, type ElementType } from "react";
-import { loadResumo, type DashboardData, type SizeRow } from "./lib/loadResumo";
+import { lazy, Suspense, useEffect, useState, type ElementType } from "react";
+import { loadResumo, type DashboardData } from "./lib/loadResumo";
 import logoPPGSP from "./assets/logo_ppgsp_home300.png";
 import "./App.css";
+import { LEVELS, summarize } from "./lib/analytics";
+
+const IndicatorsPage = lazy(() => import("./Indicators"));
 
 type Page =
   | "visao-geral"
@@ -38,17 +28,7 @@ type Page =
   | "pesquisadores";
 
 const defaultData: DashboardData = {
-  cidade: "Lages",
-  totalRespostas: 0,
-  maturidadeRegional: 0,
-  escalaRegional: "-",
-  inovatividadeRegional: 0,
-  correlacao: 0,
-  interpretacaoCorrelacao: "-",
-  porSetor: [],
-  porteComercio: [],
-  porteIndustria: [],
-  escalaData: [],
+  cidade: "Lages", participantes: [], respostasExcluidas: 0, ...summarize([]),
 };
 
 const helpTexts = {
@@ -66,14 +46,6 @@ const helpTexts = {
 function formatMetric(value: number | null) {
   if (value === null || Number.isNaN(value)) return "-";
   return value.toFixed(2).replace(".", ",");
-}
-
-function metricOrZero(value: number | null) {
-  return value ?? 0;
-}
-
-function hasData<T extends { respostas: number }>(row: T) {
-  return row.respostas > 0;
 }
 
 function TooltipLabel({ title, help }: { title: string; help: string }) {
@@ -145,38 +117,6 @@ function SectionTitle({
       <div>
         <h2>{title}</h2>
         <p>{description}</p>
-      </div>
-    </div>
-  );
-}
-
-function DataTable({ title, rows }: { title: string; rows: SizeRow[] }) {
-  return (
-    <div className="card table-card">
-      <h3 className="table-title">{title}</h3>
-
-      <div className="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Porte</th>
-              <th>Respostas</th>
-              <th>Maturidade</th>
-              <th>Inovatividade</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {rows.map((row) => (
-              <tr key={row.porte}>
-                <td>{row.porte}</td>
-                <td>{row.respostas}</td>
-                <td>{formatMetric(row.maturidade)}</td>
-                <td>{formatMetric(row.inovatividade)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </div>
   );
@@ -285,24 +225,18 @@ function DashboardSkeleton() {
   );
 }
 
-function MaturityScaleCard({ value, level }: { value: number; level: string }) {
+function MaturityScaleCard({ value, level }: { value: number | null; level: string }) {
   const max = 80;
-  const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
+  const percentage = Math.min(Math.max(((value ?? 0) / max) * 100, 0), 100);
 
-  const levels = [
-    { label: "Não iniciado", position: 0 },
-    { label: "Iniciante", position: 25 },
-    { label: "Consciente", position: 50 },
-    { label: "Gerenciado", position: 75 },
-    { label: "Integrado", position: 100 },
-  ];
+  const levels = LEVELS.map(item => ({ label: item.nivel, faixa: item.faixa, color: item.color }));
 
   return (
     <section className="card maturity-scale-card">
       <SectionTitle
         icon={Gauge}
         title="Nível de Maturidade Digital"
-        description="Escala regional calculada a partir do índice médio das organizações de Lages."
+        description="Índice médio da amostra de Lages, de 0 a 80 pontos. Seis faixas operacionais da dissertação."
       />
 
       <div className="maturity-scale-header">
@@ -317,26 +251,16 @@ function MaturityScaleCard({ value, level }: { value: number; level: string }) {
         </div>
       </div>
 
-      <div className="maturity-scale-track">
-        <div
-          className="maturity-scale-fill"
-          style={{ width: `${percentage}%` }}
-        />
-
-        {levels.map((item) => (
-          <div
-            key={item.label}
-            className="maturity-marker"
-            style={{ left: `${item.position}%` }}
-          >
-            <span />
-          </div>
-        ))}
+      <div className="maturity-scale-track" role="img" aria-label={`IMD ${formatMetric(value)} de 80 pontos; nível ${level}`}>
+        <div className="maturity-scale-bands">
+          {LEVELS.map(item => <span key={item.nivel} style={{ width: `${(item.max - item.min) / max * 100}%`, background: item.color }} />)}
+        </div>
+        {value !== null && <div className="maturity-marker" style={{ left: `${percentage}%` }}><span /></div>}
       </div>
 
       <div className="maturity-scale-labels">
         {levels.map((item) => (
-          <span key={item.label}>{item.label}</span>
+          <span key={item.label}><i className="level-dot" style={{ background: item.color }} />{item.label}<small>{item.faixa}</small></span>
         ))}
       </div>
     </section>
@@ -442,14 +366,14 @@ function KpiGrid({ data }: { data: DashboardData }) {
       <KpiCard
         title="Maturidade Digital"
         value={formatMetric(data.maturidadeRegional)}
-        subtitle="Índice médio regional"
+        subtitle="Média da amostra · 0–80 pontos"
         icon={Gauge}
         help={helpTexts.maturidade}
       />
       <KpiCard
         title="Índice de Inovatividade"
         value={formatMetric(data.inovatividadeRegional)}
-        subtitle="Índice médio regional"
+        subtitle="Média da amostra · 0–80 pontos"
         icon={TrendingUp}
         help={helpTexts.inovatividade}
       />
@@ -558,92 +482,6 @@ function OverviewPage({ data }: { data: DashboardData }) {
   );
 }
 
-function IndicatorsPage({ data }: { data: DashboardData }) {
-  const setorChartData = data.porSetor.filter(hasData).map((item) => ({
-    setor: item.setor,
-    maturidade: metricOrZero(item.maturidade),
-    inovatividade: metricOrZero(item.inovatividade),
-  }));
-
-  const escalaChartData = data.escalaData.filter((item) => item.total > 0);
-
-  return (
-    <>
-      <section className="page-heading card">
-        <SectionTitle
-          icon={BarChart3}
-          title="Indicadores analíticos"
-          description="Visualizações e tabelas para leitura setorial, distribuição dos níveis e porte das organizações."
-        />
-      </section>
-
-      <section className="grid-two">
-        <div className="card chart-card">
-          <SectionTitle
-            icon={Building2}
-            title="Comparativo por setor"
-            description="O gráfico exibe apenas setores com respostas válidas."
-          />
-
-          <div className="chart-wrap">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={setorChartData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="setor" />
-                <YAxis domain={[0, 100]} />
-                <Tooltip />
-                <Legend />
-                <Bar
-                  dataKey="maturidade"
-                  fill="#4f8e2c"
-                  radius={[8, 8, 0, 0]}
-                />
-                <Bar
-                  dataKey="inovatividade"
-                  fill="#1f5f99"
-                  radius={[8, 8, 0, 0]}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        <div className="card chart-card">
-          <SectionTitle
-            icon={Factory}
-            title="Distribuição da escala"
-            description="Faixas de maturidade com ocorrência na amostra."
-          />
-
-          <div className="chart-wrap">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={escalaChartData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="nivel" />
-                <YAxis allowDecimals={false} />
-                <Tooltip />
-                <Bar dataKey="total" radius={[8, 8, 0, 0]}>
-                  {escalaChartData.map((item) => (
-                    <Cell key={item.nivel} fill={item.color} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      </section>
-
-      <section className="grid-two">
-        <DataTable title="Porte — Comércio Serviços" rows={data.porteComercio} />
-        <DataTable
-          title="Porte — Indústria e Construção"
-          rows={data.porteIndustria}
-        />
-      </section>
-    </>
-  );
-}
-
 function MethodologyPage() {
   return (
     <>
@@ -687,10 +525,7 @@ function MethodologyPage() {
         <div className="card methodology-card">
           <h3>Cálculo dos índices</h3>
           <p>
-            As respostas são convertidas em scores numéricos e consolidadas em
-            médias regionais. O índice de maturidade digital representa o estágio
-            médio da amostra, enquanto o índice de inovatividade expressa a
-            predisposição das organizações à inovação.
+            Cada instrumento contém 20 itens, codificados de 0 a 4, totalizando de 0 a 80 pontos. As médias são calculadas por organização. Respostas de Lages com itens ausentes ou não reconhecidos são excluídas, sem converter ausência em zero. O IMD é tratado como variável contínua na correlação; as seis faixas operacionais são usadas para descrição.
           </p>
         </div>
 
@@ -707,8 +542,7 @@ function MethodologyPage() {
           <h3>Limitações</h3>
           <p>
             Os resultados devem ser interpretados considerando o caráter
-            autodeclarado das respostas, o recorte regional e o estágio de
-            evolução da amostra durante o período de coleta.
+            autodeclarado das respostas, a amostra não probabilística por conveniência e a coleta em andamento. Os resultados descrevem as organizações participantes, sem generalização estatística para todas as empresas de Lages. Correlação não implica causalidade; comparações por porte devem considerar o número de participantes.
           </p>
         </div>
       </section>
@@ -961,7 +795,7 @@ export default function App() {
         <NavMenu currentPage={currentPage} onChangePage={setCurrentPage} />
 
         {currentPage === "visao-geral" && <OverviewPage data={data} />}
-        {currentPage === "indicadores" && <IndicatorsPage data={data} />}
+        {currentPage === "indicadores" && <Suspense fallback={<SkeletonChartCard />}><IndicatorsPage data={data} /></Suspense>}
         {currentPage === "metodologia" && <MethodologyPage />}
         {currentPage === "faq" && <FaqPage />}
         {currentPage === "pesquisadores" && <ResearchersPage />}
