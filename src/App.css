@@ -134,6 +134,7 @@ body {
   color: white;
 }
 
+.survey-cta,
 .refresh-btn {
   border: none;
   border-radius: 16px;
@@ -151,6 +152,18 @@ body {
   box-shadow: 0 10px 26px rgba(37, 77, 37, 0.18);
 }
 
+.survey-cta {
+  margin-top: 20px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.survey-cta:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+
+.survey-cta:hover,
 .refresh-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 14px 30px rgba(37, 77, 37, 0.22);
