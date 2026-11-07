@@ -317,7 +317,7 @@ function Hero({
   return (
     <header className="hero">
       <div className="hero-main">
-        <span className="badge">Observatório Digital de Lages</span>
+        <span className="badge">Painel de Maturidade Digital de Lages</span>
         <h1>Maturidade Digital e Inovatividade Organizacional</h1>
         <p>
           Portal de pesquisa aplicada conectado à base de respostas do estudo,

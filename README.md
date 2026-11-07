@@ -1,4 +1,4 @@
-# Observatório Digital de Lages
+# Painel de Maturidade Digital de Lages
 
 Dashboard de maturidade digital e inovatividade organizacional, desenvolvido em React, TypeScript, Vite e Recharts. A fonte é a planilha já configurada em `src/lib/loadResumo.ts`, atualizada ao abrir o painel, manualmente e a cada cinco minutos.
 
