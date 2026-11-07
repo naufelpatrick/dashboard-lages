@@ -324,8 +324,14 @@ function Hero({
           com foco em Lages, setor, porte e relação entre maturidade digital e
           inovatividade.
         </p>
-        <a className="survey-cta" href="https://patrickppgsp.short.gy/pgr-maturidade">
-          Responde a Pesquisa e Contribua
+        <a
+          className="survey-cta"
+          href="https://patrickppgsp.short.gy/pgr-maturidade"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Responda à pesquisa (abre em nova aba)"
+        >
+          Responda à pesquisa
         </a>
       </div>
 
