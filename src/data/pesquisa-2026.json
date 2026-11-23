@@ -1,0 +1,499 @@
+{
+  "dataEncerramento": "2026-11-23",
+  "totalRegistrosOriginais": 88,
+  "localidade": "Lages, SC",
+  "participantes": [
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 33,
+      "inovatividade": 74
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Não classificado",
+      "maturidade": 46,
+      "inovatividade": 48
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 12,
+      "inovatividade": 26
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 64,
+      "inovatividade": 55
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 36,
+      "inovatividade": 38
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 18,
+      "inovatividade": 17
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Média",
+      "maturidade": 59,
+      "inovatividade": 53
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 64,
+      "inovatividade": 74
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 50,
+      "inovatividade": 39
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 67,
+      "inovatividade": 67
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 60,
+      "inovatividade": 58
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "MEI",
+      "maturidade": 49,
+      "inovatividade": 44
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 45,
+      "inovatividade": 67
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 36,
+      "inovatividade": 54
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Grande",
+      "maturidade": 58,
+      "inovatividade": 68
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Pequena",
+      "maturidade": 52,
+      "inovatividade": 60
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Grande",
+      "maturidade": 56,
+      "inovatividade": 58
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 56,
+      "inovatividade": 54
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Pequena",
+      "maturidade": 35,
+      "inovatividade": 43
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 15,
+      "inovatividade": 17
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Grande",
+      "maturidade": 74,
+      "inovatividade": 78
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Pequena",
+      "maturidade": 40,
+      "inovatividade": 40
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Pequena",
+      "maturidade": 60,
+      "inovatividade": 54
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "MEI",
+      "maturidade": 27,
+      "inovatividade": 51
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Média",
+      "maturidade": 36,
+      "inovatividade": 59
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Pequena",
+      "maturidade": 32,
+      "inovatividade": 44
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 66,
+      "inovatividade": 77
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Microempresa",
+      "maturidade": 13,
+      "inovatividade": 53
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Média",
+      "maturidade": 29,
+      "inovatividade": 13
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Grande",
+      "maturidade": 61,
+      "inovatividade": 78
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 41,
+      "inovatividade": 70
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 23,
+      "inovatividade": 65
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Média",
+      "maturidade": 58,
+      "inovatividade": 63
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 67,
+      "inovatividade": 76
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 36,
+      "inovatividade": 47
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 29,
+      "inovatividade": 56
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 32,
+      "inovatividade": 70
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "MEI",
+      "maturidade": 64,
+      "inovatividade": 64
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 20,
+      "inovatividade": 20
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 40,
+      "inovatividade": 48
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 30,
+      "inovatividade": 38
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 61,
+      "inovatividade": 76
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Pequena",
+      "maturidade": 71,
+      "inovatividade": 70
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 29,
+      "inovatividade": 39
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 61,
+      "inovatividade": 69
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Pequena",
+      "maturidade": 73,
+      "inovatividade": 76
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Grande",
+      "maturidade": 70,
+      "inovatividade": 78
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Grande",
+      "maturidade": 55,
+      "inovatividade": 58
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 77,
+      "inovatividade": 75
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 19,
+      "inovatividade": 25
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 41,
+      "inovatividade": 58
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 32,
+      "inovatividade": 29
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Pequena",
+      "maturidade": 72,
+      "inovatividade": 68
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 43,
+      "inovatividade": 27
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 31,
+      "inovatividade": 40
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Pequena",
+      "maturidade": 70,
+      "inovatividade": 80
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 70,
+      "inovatividade": 67
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "MEI",
+      "maturidade": 80,
+      "inovatividade": 74
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 57,
+      "inovatividade": 45
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 38,
+      "inovatividade": 69
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 55,
+      "inovatividade": 62
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Média",
+      "maturidade": 57,
+      "inovatividade": 49
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 25,
+      "inovatividade": 41
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 67,
+      "inovatividade": 77
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 56,
+      "inovatividade": 55
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Média",
+      "maturidade": 51,
+      "inovatividade": 65
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 40,
+      "inovatividade": 49
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 32,
+      "inovatividade": 39
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Pequena",
+      "maturidade": 27,
+      "inovatividade": 44
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 68,
+      "inovatividade": 77
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 47,
+      "inovatividade": 65
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Microempresa",
+      "maturidade": 26,
+      "inovatividade": 73
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 13,
+      "inovatividade": 4
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 52,
+      "inovatividade": 60
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 77,
+      "inovatividade": 73
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Grande",
+      "maturidade": 71,
+      "inovatividade": 70
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Microempresa",
+      "maturidade": 43,
+      "inovatividade": 53
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Microempresa",
+      "maturidade": 27,
+      "inovatividade": 56
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Microempresa",
+      "maturidade": 24,
+      "inovatividade": 53
+    },
+    {
+      "setor": "Indústria e Construção",
+      "porte": "Grande",
+      "maturidade": 59,
+      "inovatividade": 65
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "Pequena",
+      "maturidade": 43,
+      "inovatividade": 37
+    },
+    {
+      "setor": "Comércio Serviços",
+      "porte": "MEI",
+      "maturidade": 61,
+      "inovatividade": 68
+    }
+  ]
+}
