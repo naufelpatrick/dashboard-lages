@@ -1,5 +1,5 @@
 import { summarize, type Participant, type Summary } from './analytics.ts';
-import snapshot from '../data/pesquisa-2026.json';
+import snapshot from '../data/pesquisa-2026.json' with { type: 'json' };
 export type { SizeRow, SectorRow, ScaleRow } from './analytics.ts';
 export type DashboardData = Summary & { cidade: string; participantes: Participant[]; respostasExcluidas: number };
 /** Base final anonimizada de 82 organizações, congelada em 23/11/2026.
