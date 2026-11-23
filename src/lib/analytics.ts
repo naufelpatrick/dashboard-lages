@@ -61,8 +61,8 @@ export function summarize(rows: Participant[]) {
   const r = correlation(rows);
   const metric = (subset: Participant[]) => ({
     respostas: subset.length,
-    maturidade: round(average(subset.map(r => r.maturidade))),
-    inovatividade: round(average(subset.map(r => r.inovatividade))),
+    maturidade: round(average(subset.map(r => r.maturidade * 1.25))),
+    inovatividade: round(average(subset.map(r => r.inovatividade * 1.25))),
   });
   const sizes = (subset: Participant[]): SizeRow[] => SIZES.map(porte => ({ porte, ...metric(subset.filter(r => r.porte === porte)) }));
   const escalaData: ScaleRow[] = LEVELS.map(level => {
@@ -71,8 +71,8 @@ export function summarize(rows: Participant[]) {
   });
   return {
     totalRespostas: n,
-    maturidadeRegional: round(mean),
-    inovatividadeRegional: round(average(rows.map(r => r.inovatividade))),
+    maturidadeRegional: round(mean === null ? null : mean * 1.25),
+    inovatividadeRegional: round(average(rows.map(r => r.inovatividade * 1.25))),
     escalaRegional: mean === null ? 'Sem dados' : deriveScale(mean),
     correlacao: round(r),
     interpretacaoCorrelacao: r === null ? 'Não calculável' : Math.abs(r) < .2 ? 'Muito fraca' : Math.abs(r) < .4 ? 'Fraca' : Math.abs(r) < .6 ? 'Moderada' : Math.abs(r) < .8 ? 'Forte' : 'Muito forte',
@@ -81,8 +81,8 @@ export function summarize(rows: Participant[]) {
     porteIndustria: sizes(rows.filter(r => r.setor === 'Indústria e Construção')),
     porPorte: sizes(rows),
     escalaData,
-    mediana: n ? (scores[Math.floor((n - 1) / 2)] + scores[Math.floor(n / 2)]) / 2 : null,
-    desvioPadrao: n > 1 ? Math.sqrt(scores.reduce((sum, s) => sum + (s - mean!) ** 2, 0) / (n - 1)) : null,
+    mediana: n ? (scores[Math.floor((n - 1) / 2)] + scores[Math.floor(n / 2)]) / 2 * 1.25 : null,
+    desvioPadrao: n > 1 ? Math.sqrt(scores.reduce((sum, s) => sum + (s - mean!) ** 2, 0) / (n - 1)) * 1.25 : null,
     niveisIniciais: escalaData[0].total + escalaData[1].total,
     niveisSuperiores: escalaData[4].total + escalaData[5].total,
     distribuicaoPorte: sizes(rows).filter(s => s.respostas).map(s => ({
@@ -93,7 +93,7 @@ export function summarize(rows: Participant[]) {
       const key = `${row.maturidade}:${row.inovatividade}`;
       const current = map.get(key);
       if (current) current.total++;
-      else map.set(key, { maturidade: row.maturidade, inovatividade: row.inovatividade, total: 1 });
+      else map.set(key, { maturidade: row.maturidade * 1.25, inovatividade: row.inovatividade * 1.25, total: 1 });
       return map;
     }, new Map<string, { maturidade: number; inovatividade: number; total: number }>()).values()),
   };
