@@ -8,7 +8,6 @@ import {
   HelpCircle,
   LayoutDashboard,
   MapPin,
-  RefreshCw,
   TrendingUp,
   Users,
 } from "lucide-react";
@@ -303,17 +302,7 @@ function NavMenu({
   );
 }
 
-function Hero({
-  data,
-  lastUpdated,
-  refreshing,
-  onRefresh,
-}: {
-  data: DashboardData;
-  lastUpdated: string;
-  refreshing: boolean;
-  onRefresh: () => void;
-}) {
+function Hero({ data }: { data: DashboardData }) {
   return (
     <header className="hero">
       <div className="hero-main">
@@ -401,7 +390,7 @@ function OverviewPage({ data }: { data: DashboardData }) {
           <SectionTitle
             icon={Gauge}
             title="Leitura regional"
-            description="Síntese executiva do estágio atual das organizações de Lages."
+            description="Síntese executiva das 82 organizações participantes de Lages."
           />
 
           <div className="highlight-content">
@@ -443,7 +432,7 @@ function OverviewPage({ data }: { data: DashboardData }) {
           <SectionTitle
             icon={BarChart3}
             title="Principais achados"
-            description="Resumo interpretativo da base atual."
+            description="Resumo dos resultados finais de 2026."
           />
 
           <ul className="insight-list">
@@ -700,16 +689,12 @@ export default function App() {
   const [data, setData] = useState<DashboardData>(defaultData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [lastUpdated, setLastUpdated] = useState("");
-  const [refreshing, setRefreshing] = useState(false);
   const [currentPage, setCurrentPage] = useState<Page>("visao-geral");
 
   useEffect(() => {
     let mounted = true;
 
-    async function run(showLoading = false, manual = false) {
-      if (showLoading && mounted) setLoading(true);
-      if (manual && mounted) setRefreshing(true);
+    async function run() {
 
       try {
         const result = await loadResumo();
@@ -718,24 +703,18 @@ export default function App() {
 
         setData(result);
         setError("");
-        setLastUpdated(
-          new Date().toLocaleTimeString("pt-BR", {
-            hour: "2-digit",
-            minute: "2-digit",
-          })
-        );
+
       } catch (err) {
         console.error(err);
-        if (mounted) setError("Não foi possível carregar a planilha.");
+        if (mounted) setError("Não foi possível carregar a base final da pesquisa.");
       } finally {
         if (mounted) {
           setLoading(false);
-          setRefreshing(false);
         }
       }
     }
 
-    run(true);
+    run();
 
 
 
@@ -744,27 +723,6 @@ export default function App() {
 
     };
   }, []);
-
-  async function handleRefresh() {
-    setRefreshing(true);
-
-    try {
-      const result = await loadResumo();
-      setData(result);
-      setError("");
-      setLastUpdated(
-        new Date().toLocaleTimeString("pt-BR", {
-          hour: "2-digit",
-          minute: "2-digit",
-        })
-      );
-    } catch (err) {
-      console.error(err);
-      setError("Não foi possível carregar a planilha.");
-    } finally {
-      setRefreshing(false);
-    }
-  }
 
   if (loading) return <DashboardSkeleton />;
 
@@ -783,9 +741,6 @@ export default function App() {
       <div className="container">
         <Hero
           data={data}
-          lastUpdated={lastUpdated}
-          refreshing={refreshing}
-          onRefresh={handleRefresh}
         />
 
         <NavMenu currentPage={currentPage} onChangePage={setCurrentPage} />
