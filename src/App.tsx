@@ -226,7 +226,7 @@ function DashboardSkeleton() {
 }
 
 function MaturityScaleCard({ value, level }: { value: number | null; level: string }) {
-  const max = 80;
+  const max = 100;
   const percentage = Math.min(Math.max(((value ?? 0) / max) * 100, 0), 100);
 
   const levels = LEVELS.map(item => ({ label: item.nivel, faixa: item.faixa, color: item.color }));
@@ -236,7 +236,7 @@ function MaturityScaleCard({ value, level }: { value: number | null; level: stri
       <SectionTitle
         icon={Gauge}
         title="Nível de Maturidade Digital"
-        description="Índice médio da amostra de Lages, de 0 a 80 pontos. Seis faixas operacionais da dissertação."
+        description="Índice médio normalizado de 0 a 100 pontos. Classificação operacional baseada na escala original de 0 a 80."
       />
 
       <div className="maturity-scale-header">
@@ -251,9 +251,9 @@ function MaturityScaleCard({ value, level }: { value: number | null; level: stri
         </div>
       </div>
 
-      <div className="maturity-scale-track" role="img" aria-label={`IMD ${formatMetric(value)} de 80 pontos; nível ${level}`}>
+      <div className="maturity-scale-track" role="img" aria-label={`IMD ${formatMetric(value)} de 100 pontos; nível ${level}`}>
         <div className="maturity-scale-bands">
-          {LEVELS.map(item => <span key={item.nivel} style={{ width: `${(item.max - item.min) / max * 100}%`, background: item.color }} />)}
+          {LEVELS.map(item => <span key={item.nivel} style={{ width: `${(item.max - item.min) * 1.25 / max * 100}%`, background: item.color }} />)}
         </div>
         {value !== null && <div className="maturity-marker" style={{ left: `${percentage}%` }}><span /></div>}
       </div>
@@ -320,19 +320,11 @@ function Hero({
         <span className="badge">Painel de Maturidade Digital de Lages</span>
         <h1>Maturidade Digital e Inovatividade Organizacional</h1>
         <p>
-          Portal de pesquisa aplicada conectado à base de respostas do estudo,
+          Painel público dos resultados finais da pesquisa,
           com foco em Lages, setor, porte e relação entre maturidade digital e
           inovatividade.
         </p>
-        <a
-          className="survey-cta"
-          href="https://patrickppgsp.short.gy/pgr-maturidade"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Responda à pesquisa (abre em nova aba)"
-        >
-          Responda à pesquisa
-        </a>
+        <p className="survey-closed">Coleta encerrada em 23/11/2026 · resultados finais (n = 82)</p>
       </div>
 
       <div className="hero-side">
@@ -342,14 +334,11 @@ function Hero({
         </div>
 
         <div className="hero-mini-card">
-          <p>Última atualização</p>
-          <strong>{lastUpdated || "Agora"}</strong>
+          <p>Encerramento da coleta</p>
+          <strong>23/11/2026</strong>
         </div>
 
-        <button className="refresh-btn" onClick={onRefresh} disabled={refreshing}>
-          <RefreshCw size={16} className={refreshing ? "spin-icon" : ""} />
-          {refreshing ? "Atualizando..." : "Atualizar agora"}
-        </button>
+
       </div>
     </header>
   );
@@ -375,14 +364,14 @@ function KpiGrid({ data }: { data: DashboardData }) {
       <KpiCard
         title="Maturidade Digital"
         value={formatMetric(data.maturidadeRegional)}
-        subtitle="Média da amostra · 0–80 pontos"
+        subtitle="Média da amostra · 0–100 pontos"
         icon={Gauge}
         help={helpTexts.maturidade}
       />
       <KpiCard
         title="Índice de Inovatividade"
         value={formatMetric(data.inovatividadeRegional)}
-        subtitle="Média da amostra · 0–80 pontos"
+        subtitle="Média da amostra · 0–100 pontos"
         icon={TrendingUp}
         help={helpTexts.inovatividade}
       />
@@ -477,13 +466,13 @@ function OverviewPage({ data }: { data: DashboardData }) {
           <SectionTitle
             icon={TrendingUp}
             title="Painel conectado"
-            description="Os dados são lidos automaticamente da planilha."
+            description="Base anonimizada e congelada após o encerramento da pesquisa."
           />
 
           <ul className="insight-list">
-            <li>Novas respostas atualizam os indicadores.</li>
-            <li>Setor e porte acompanham a base real.</li>
-            <li>Atualização automática a cada 5 minutos.</li>
+            <li>Coleta encerrada em 23/11/2026.</li>
+            <li>82 organizações válidas de Lages (SC).</li>
+            <li>Os indicadores não recebem novas respostas.</li>
           </ul>
         </div>
       </section>
@@ -534,7 +523,7 @@ function MethodologyPage() {
         <div className="card methodology-card">
           <h3>Cálculo dos índices</h3>
           <p>
-            Cada instrumento contém 20 itens, codificados de 0 a 4, totalizando de 0 a 80 pontos. As médias são calculadas por organização. Respostas de Lages com itens ausentes ou não reconhecidos são excluídas, sem converter ausência em zero. O IMD é tratado como variável contínua na correlação; as seis faixas operacionais são usadas para descrição.
+            Cada instrumento contém 20 itens, codificados de 0 a 4, totalizando de 0 a 80 pontos brutos, posteriormente normalizados para 0 a 100. As médias são calculadas por organização. Respostas de Lages com itens ausentes ou não reconhecidos são excluídas, sem converter ausência em zero. O IMD é tratado como variável contínua na correlação; as seis faixas operacionais são usadas para descrição.
           </p>
         </div>
 
@@ -551,7 +540,7 @@ function MethodologyPage() {
           <h3>Limitações</h3>
           <p>
             Os resultados devem ser interpretados considerando o caráter
-            autodeclarado das respostas, a amostra não probabilística por conveniência e a coleta em andamento. Os resultados descrevem as organizações participantes, sem generalização estatística para todas as empresas de Lages. Correlação não implica causalidade; comparações por porte devem considerar o número de participantes.
+            autodeclarado das respostas, a amostra não probabilística por conveniência e a coleta encerrada em 23/11/2026. Os resultados descrevem as organizações participantes, sem generalização estatística para todas as empresas de Lages. Correlação não implica causalidade; comparações por porte devem considerar o número de participantes.
           </p>
         </div>
       </section>
@@ -616,7 +605,7 @@ function FaqPage() {
 
         <FaqItem
           question="O que significa a Escala de Maturidade?"
-          answer="A Escala de Maturidade classifica o estágio organizacional em níveis progressivos, como Não Iniciado, Iniciante, Consciente, Gerenciado e Integrado. Essa tipologia permite interpretar resultados numéricos de forma mais aplicada, identificando em qual estágio médio as organizações da amostra se encontram e quais avanços ainda são necessários."
+          answer="A Escala de Maturidade classifica o estágio organizacional em níveis progressivos, como Não iniciado, Iniciante, Consciente, Gerenciado, Integrado e Otimizado. Essa tipologia permite interpretar resultados numéricos de forma mais aplicada, identificando em qual estágio médio as organizações da amostra se encontram e quais avanços ainda são necessários."
         />
 
         <FaqItem
@@ -641,7 +630,7 @@ function FaqPage() {
 
         <FaqItem
           question="Como os dados são atualizados?"
-          answer="O painel está conectado à base consolidada da pesquisa. Novas respostas válidas podem alterar automaticamente médias, distribuições e indicadores estatísticos, permitindo acompanhamento dinâmico da evolução regional durante o período de coleta."
+          answer="A coleta foi encerrada em 23/11/2026. O painel utiliza uma base final anonimizada e congelada com 82 organizações válidas; novas respostas não alteram os indicadores."
         />
 
         <FaqItem
@@ -748,13 +737,11 @@ export default function App() {
 
     run(true);
 
-    const interval = window.setInterval(() => {
-      run(false);
-    }, 5 * 60 * 1000);
+
 
     return () => {
       mounted = false;
-      window.clearInterval(interval);
+
     };
   }, []);
 
